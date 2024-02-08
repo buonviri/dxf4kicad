@@ -1,14 +1,14 @@
 import ezdxf
-# from ezdxf.addons import r12export
-# from ezdxf.addons import odafc
+import os
 
-filelist = [['M2-Board_outline.dxf','M2-R2000.dxf'],]  # input and output file pairs
+filelist = [['Half-Moon, Bot.dxf','Half-Moon, Bot (R2000).dxf'], ['Half-Moon, Top.dxf','Half-Moon, Top (R2000).dxf'],]  # input and output file pairs
 entitylist = []  # will get filled with unique entities
 
 for file in filelist:
     unique  = 0
     duplicate = 0
     nonzero = 0
+    print('\n\nReading: ' + file[0])
     doc = ezdxf.readfile(file[0])
     msp = doc.modelspace()
     before = len(msp)
@@ -50,13 +50,20 @@ for file in filelist:
     del msp
     del doc
 
+    print('Reading: ' + file[1])
     doc = ezdxf.readfile(file[1])
     msp = doc.modelspace()
     after = len(msp)
 
-    print()
-    print('Non-zero Z value: ' + str(nonzero))
-    print('Unique entities: ' + str(unique))
-    print('Duplicate entities: ' + str(duplicate))
-    print()
-    print('Before and After: ' + str(before) + ' -> ' + str(after))
+    print('   Non-zero Z value: ' + str(nonzero))
+    print('   Unique entities: ' + str(unique))
+    print('   Duplicate entities: ' + str(duplicate))
+    print('   Before and After: ' + str(before) + ' -> ' + str(after))
+
+    del msp
+    del doc
+
+print()
+print()
+os.system('PAUSE')
+#EOF
