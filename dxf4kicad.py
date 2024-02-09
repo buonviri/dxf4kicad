@@ -2,9 +2,20 @@ import ezdxf
 import os
 
 filelist = [['Half-Moon, Bot.dxf','Half-Moon, Bot (R2000).dxf'], ['Half-Moon, Top.dxf','Half-Moon, Top (R2000).dxf'],]  # input and output file pairs
-entitylist = []  # will get filled with unique entities
+
+autofilelist = True  # set this to true to look for dxf files that don't end in (R2000)
+autostring = ' (kicadified)'
+if autofilelist:
+    filelist = []  # blank out existing list or initialize
+    for f in os.listdir():
+        if f.endswith('.dxf'):
+            if f[:-4].endswith(autostring):
+                pass  # skip this file since it's an output of this converter
+            else:
+                filelist.append([f, f[:-4] + autostring + '.dxf'])
 
 for file in filelist:
+    entitylist = []  # will get filled with unique entities
     unique  = 0
     duplicate = 0
     nonzero = 0
