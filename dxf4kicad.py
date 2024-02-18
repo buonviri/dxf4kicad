@@ -1,7 +1,7 @@
 import ezdxf
 import os
 
-filelist = [['Half-Moon, Bot.dxf','Half-Moon, Bot (R2000).dxf'], ['Half-Moon, Top.dxf','Half-Moon, Top (R2000).dxf'],]  # input and output file pairs
+filelist = [['a.dxf','a (R2000).dxf'], ['b.dxf','b (new).dxf'],]  # input and output file pairs
 
 autofilelist = True  # set this to true to look for dxf files that don't end in (R2000)
 autostring = ' (kicadified)'
