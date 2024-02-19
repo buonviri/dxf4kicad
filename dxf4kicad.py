@@ -14,6 +14,8 @@ if autofilelist:
             else:
                 filelist.append([f, f[:-4] + autostring + '.dxf'])
 
+verbose = False  # set to True to list every entity
+
 for file in filelist:
     entitylist = []  # will get filled with unique entities
     unique  = 0
@@ -29,30 +31,36 @@ for file in filelist:
             z0 = e.dxf.start[2]
             z1 = e.dxf.end[2]
             if z0 < -0.0000001 or z0 > 0.0000001 or z1 < -0.0000001 or z1 > 0.0000001:
-                print('   Z ' + s)
+                if verbose:
+                    print('   Z ' + s)
                 nonzero = nonzero + 1
                 e.destroy() # msp.delete_entity(e)
             elif s in entitylist:
-                print('   D ' + s)
+                if verbose:
+                    print('   D ' + s)
                 duplicate = duplicate + 1
                 e.destroy() # msp.delete_entity(e)
             else:
-                print(s)
+                if verbose:
+                    print(s)
                 entitylist.append(s)
                 unique = unique + 1
         elif e.dxftype() == "ARC":
             s = str(e.dxf.center) + ' ' + str(e.dxf.radius) + ' ' + e.dxftype()
             z0 = e.dxf.center[2]
             if z0 < -0.0000001 or z0 > 0.0000001:
-                print('   Z ' + s)
+                if verbose:
+                    print('   Z ' + s)
                 nonzero = nonzero + 1
                 e.destroy() # msp.delete_entity(e)
             elif s in entitylist:
-                print('   D ' + s)
+                if verbose:
+                    print('   D ' + s)
                 duplicate = duplicate + 1
                 e.destroy() # msp.delete_entity(e)
             else:
-                print(s)
+                if verbose:
+                    print(s)
                 entitylist.append(s)
                 unique = unique + 1
     # r12export.saveas(doc, file[1])
@@ -61,13 +69,13 @@ for file in filelist:
     del msp
     del doc
 
-    print('Reading: ' + file[1])
+    print('Writing: ' + file[1])
     doc = ezdxf.readfile(file[1])
     msp = doc.modelspace()
     after = len(msp)
 
-    print('   Non-zero Z value: ' + str(nonzero))
     print('   Unique entities: ' + str(unique))
+    print('   Non-zero Z value: ' + str(nonzero))
     print('   Duplicate entities: ' + str(duplicate))
     print('   Before and After: ' + str(before) + ' -> ' + str(after))
 
